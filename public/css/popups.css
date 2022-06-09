@@ -1,0 +1,189 @@
+/***************************/
+/* SYSTEM NOTIFICATION */
+.system-section-notification{
+    display: none;
+    position: fixed;
+    top: 40px;
+    right: 1%;
+    transition: 0.5s;
+    z-index: 12;
+}
+.sys-notifi-container-main{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 5px;
+    transition: 0.5s;
+}
+
+/************/
+/* ONE */
+.sys-notifi-box-one{
+    width: min-content;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+    background: var(--color-green);
+    margin-top: 18px;
+    transition: 0.5s;
+}
+.sys-notifi-main-msg-display-one{
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-four);
+}
+.sys-notifi-container-msg-center-one{
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.sys-notifi-icon-one i{
+    font-size: 1.8rem;
+}
+.sys-notifi-text-one{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sys-notifi-text-one span{
+    padding: 15px;
+    margin-left: 7px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/************/
+/* TWO */
+.sys-notifi-box-two{
+    width: min-content;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+    background: var(--color-yellow);
+    margin-top: 18px;
+    transition: 0.5s;
+}
+.sys-notifi-main-msg-display-two{
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-four);
+}
+.sys-notifi-container-msg-center-two{
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.sys-notifi-icon-two i{
+    font-size: 1.8rem;
+}
+.sys-notifi-text-two{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sys-notifi-text-two span{
+    padding: 15px;
+    margin-left: 7px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/************/
+/* THREE */
+.sys-notifi-box-three{
+    width: min-content;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+    background: var(--color-red);
+    margin-top: 18px;
+    transition: 0.5s;
+}
+.sys-notifi-main-msg-display-three{
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-four);
+}
+.sys-notifi-container-msg-center-three{
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.sys-notifi-icon-three i{
+    font-size: 1.8rem;
+}
+.sys-notifi-text-three{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sys-notifi-text-three span{
+    padding: 15px;
+    margin-left: 7px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+
+/* RESPONSIVE */
+@media only screen and (max-width: 500px) {
+    .system-section-notification{
+        width: 100%;
+    }.sys-notifi-container-main{
+        right: 0;
+        width: 100%;
+    }
+
+    .sys-notifi-container-msg-center-two{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .sys-notifi-box-two{
+        width: 100%;
+    }
+
+    .sys-notifi-container-msg-center-one{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .sys-notifi-box-one{
+        width: 100%;
+    }
+
+    .sys-notifi-container-msg-center-three{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .sys-notifi-box-three{
+        width: 100%;
+    }
+
+
+    .sys-notifi-text-three span{
+        white-space: normal;
+        text-align: center;
+    }
+    .sys-notifi-text-one span{
+        white-space: normal;
+        text-align: center;
+    }
+    .sys-notifi-text-two span{
+        white-space: normal;
+        text-align: center;
+    }
+}

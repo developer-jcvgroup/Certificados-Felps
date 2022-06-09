@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/panel/main.css">
+
+    <link rel="shortcut icon" href="/img/logos/favicon.png" type="image/x-icon">
+    
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/jquery.mask.js"></script>
+    <script src="/js/js.cookie.min.js"></script>
+    <script src="/js/popups.js"></script>
+
+    <title>Certificados | JCV GROUP</title>
+</head>
+<body>
+    <section class="main-section">
+        <section class="main-section-header">
+            <header>
+                <div class="main-section-header-actions">
+                    <div class="main-section-header-logo">
+                        <img src="/img/logos/jcvLogo.png" alt="">
+                        <span><b style="padding: 0 5px;">•</b> Certificados</span>
+                    </div>
+                    <!--  -->
+                    <!-- <div class="main-container-links">
+                        <ul>
+                            <li><a href="">###</a></li>
+                            <li><a href="">###</a></li>
+                            <li><a href="">###</a></li>
+                            <li><a href="">###</a></li>
+                        </ul>
+                    </div> -->
+                </div>
+                <!--  -->
+                <div class="main-section-info-user">
+                    <div class="main-section-info-user-get">
+                        <span id="open-menu-drop"><i class="ri-user-line"></i>⠀<%= DASH_INFO[1][0].jcv_users_name %>⠀<i id="icon-down" class="ri-arrow-down-s-line"></i></span>
+                        <ul class="main-section-info-user-get-list" id="main-section-info-user-get-list">
+                            <li><a href="https://jcv.net.br/painel" id="back-jcv-panel"><i class="ri-arrow-go-back-line"></i>⠀Voltar ao <b>JCV GROUP</b></a></li>
+                            <li><a href="#" id="main-section-open"><i class="ri-user-line"></i>⠀Meus Dados</a></li>
+                            <li><a href="/painel/logout"><b><i class="ri-logout-box-r-line"></i>⠀Sair</b></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </section>
+        <!--  -->
+        <!--  -->
+        <section class="main-section-body">
+
+            <%- include(page) %>
+
+        </section>
+    </section>
+
+    <!-- SECTION MY ACCOUNT -->
+    <section class="myaccount-section-main" id="myaccount-section-main">
+        <section class="myaccount-display-main">
+            <div class="myaccount-display-title">
+                <span>Meus dados</span>
+                <span><i id="main-section-close" class="ri-close-line"></i></span>
+            </div>
+            <!--  -->
+            <form method="post" class="myaccount-display-info">
+
+                <div class="myaccount-display-center">
+
+
+                    <div class="myaccount-display-row">
+                        <label for="">Meu nome</label>
+                        <input type="text" name="user-name" value="<%= DASH_INFO[1][0].jcv_users_name %>">
+                    </div>
+                    <div class="myaccount-display-row">
+                        <label for="">CPF</label>
+                        <input type="text" name="user-cpf" id="mask-cpf" value="<%= DASH_INFO[1][0].jcv_users_cpf %>">
+                    </div>
+                    <div class="myaccount-display-row">
+                        <label for="">Telefone celular</label>
+                        <input type="text" name="user-telefone" id="mask-numero" value="<%= DASH_INFO[1][0].jcv_users_telefone %>">
+                    </div>
+                    <div class="myaccount-display-row">
+                        <label for="">E-mail (pricipal)</label>
+                        <input type="text" name="user-email-primary" value="<%= DASH_INFO[1][0].jcv_users_email_primary %>">
+                    </div>
+                    <div class="myaccount-display-row">
+                        <label for="">E-mail (Secundário opcional)</label>
+                        <input type="text" name="user-email-secundary" value="<%= DASH_INFO[1][0].jcv_users_email_secundary %>">
+                    </div>
+
+                    <hr>
+
+                    <div class="myaccount-display-row">
+                        <label for="">Senha</label>
+                        <input type="password" name="login-newpass-one">
+                    </div>
+                    <div class="myaccount-display-row">
+                        <label for="">Senha novamente</label>
+                        <input type="password" name="login-newpass-two">
+                    </div>
+
+                    <hr>
+
+                    <div class="myaccount-display-row">
+                        <span style="white-space: normal; font-size: 0.9rem;"><b>* Esta conta esta vinculada a sua conta no JCV GROUP (Acesse aqui para alterar seus dados)</b></span>
+                    </div>
+
+                    <!--  -->
+
+                    <div class="myaccount-display-row-actions">
+                        <button id="button-save-profile" formaction="/painel/account/save">Salvar</button>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+    </section>
+</body>
+<script>
+
+    let indexOpen = 0;
+    function animateIcon (){
+        if(indexOpen == 0){
+            indexOpen++;
+
+            $("#icon-down").animate(
+                { deg: 180 },
+                {
+                duration: 500,
+                step: function(now) {
+                    $(this).css({ transform: 'rotate(' + now + 'deg)' });
+                }
+                }
+            );
+            
+        }else{
+            indexOpen = 0
+            //alert('poóipo')
+            $("#icon-down").animate(
+                { deg: 0 },
+                {
+                duration: 500,
+                step: function(now) {
+                    $(this).css({ transform: 'rotate(' + now + 'deg)' });
+                }
+                }
+            );
+        }
+
+        
+    }
+
+    $("#open-menu-drop").click(function(){
+        animateIcon()
+        if($("#main-section-info-user-get-list").is(':visible')){
+            $("#main-section-info-user-get-list").fadeOut()
+        }else{
+            $("#main-section-info-user-get-list").fadeIn()   
+        }
+    })
+
+    /*  */
+
+    $("#main-section-close").click(function(){
+        $("#myaccount-section-main").fadeOut()
+    })
+    $("#main-section-open").click(function(){
+        $("#main-section-info-user-get-list").fadeOut()
+        $("#myaccount-section-main").fadeIn().css({'display':'flex'})
+    })
+
+    //MASK
+    $('#mask-cpf').mask('000.000.000-00');
+    $('#mask-numero').mask('(00)00000-0000');
+
+
+    //Validação do login
+    if('<%= USER_ORIGIN %>' === 'true'){
+        $("#main-section-open").fadeOut()
+        $("#back-jcv-panel").fadeIn()
+        $("#button-save-profile").attr('disabled','disabled');
+    }else{
+        $("#back-jcv-panel").fadeOut()
+    }
+
+</script>
+</html>

@@ -1,0 +1,65 @@
+
+<section class="main-section-body-one">
+    <div class="main-section-body-title">
+        <span>Olá <%= DASH_INFO[1][0].jcv_users_name %></span>
+        <hr style="width: 100px; margin-top: 9px; margin-bottom: 5px;">
+        <span><i class="ri-file-paper-line"></i>⠀Veja abaixo todos os seus certificados</span>
+    </div>
+</section>
+
+<!--  -->
+<!--  -->
+<!--  -->
+
+<section class="main-section-body-two">
+
+    <!--  -->
+    <!--  -->
+    <!--  -->
+
+    <section class="main-section-center-panel">
+        <div class="main-section-center-panel-center">
+            
+            <% if(getAllCertificates != ''){ %>
+                <% getAllCertificates.forEach(element => { %>
+                    <div class="main-certificate-container-box">
+                        <div class="main-certificate-container-box-img">
+                            <img src="/img/referece-certificates/model_felps.png" alt="">
+                        </div>
+                        <!--  -->
+                        <div class="main-certificate-container-box-info">
+                            <div class="main-certificate-info">
+                                <span><%= element.jcv_course_name %></span>
+                                <span><b><%= element.jcv_course_brand %></b></span>
+
+                                <span>Ministrado por <b><%= getAllInstructors.filter(x => x.idUserPanel === parseInt(element.jcv_course_manager_course))[0].nameUser %></b></span>
+                                
+                                <span>Concluído: <b><%= element.jcv_course_initial_date.split('T')[0] +' | '+ element.jcv_course_initial_date.split('T')[1] %></b></span>
+                                <span><b>Finalizado ✓</b></span>
+                            </div>
+                            <div class="main-certificate-info-actions">
+                                <button type="button" title="Baixar Certificado" onclick="openWin('/certificate/<%= element.jcv_course_uuid %>/<%= DASH_INFO[0] %>')"><i class="ri-download-2-line"></i></button>
+                                <button type="button" title="Compartilhar Certificado"><i class="ri-share-line"></i></button>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                <% }) %>
+            <% }else{ %>
+                <div>
+                    <span>Nada encontrado!</span>
+                </div>
+            <% } %>
+
+        </div>
+    </section>
+</section>
+<script>
+    function openWin(linkOpen) {
+        myWindow = window.open(linkOpen, "_blank", "width=500, height=500");
+        setTimeout(function() { myWindow.close();}, 1500);
+
+        alert('download iniciado! Verifique sua lista de downloads')
+    }
+</script>

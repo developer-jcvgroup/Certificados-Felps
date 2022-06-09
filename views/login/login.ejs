@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/jquery.mask.js"></script>
+
+    <link rel="shortcut icon" href="/img/logos/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/login/login.css">
+    <link rel="stylesheet" href="/css/popups.css">
+    <title>Log In | Certificados</title>
+</head>
+<body>
+
+    <section class="login-section-main">
+        
+        <section class="login-section-display-one">
+            <img src="/img/login/bg-one.png" alt="">
+        </section>
+        <!--  -->
+        <!--  -->
+        <section class="login-section-display-two">
+            <div class="login-container-display-box-main">
+                <div class="login-container-login-register">
+
+                    <form method="post" class="login-display-login" id="screen-display-login">
+                        <div class="login-display-login-title">
+                            <img src="/img/logos/jcvLogo.png" alt="">
+                            <span>Certificados</span>
+                        </div>
+                        <!--  -->
+                        <div class="login-display-login-boxs">
+                            <div class="login-display-login-rows">
+                                <label for="">E-mail / CPF</label>
+                                <input type="text" id="input-cpf-insert" name="login-acess">
+                            </div>
+                            <div class="login-display-login-rows">
+                                <label for="">Senha</label>
+                                <input type="password" name="login-pass">
+                            </div>
+                            <div class="login-display-login-rows-action">
+                                <button formaction="/login/action">Logar</button>
+                                <button type="button" id="open-screen-register"><b>Registrar</b></button>
+                                <span id="open-window-recovey" style="cursor: pointer;">Esqueci a senha</span>
+                            </div>
+                            <!--  -->
+                            <div class="login-display-login-rows-links">
+                                
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+
+                    <div class="login-display-login" id="screen-display-register">
+                        <div class="login-display-login-title">
+                            <img src="/img/logos/jcvLogo.png" alt="">
+                            <span>Certificados</span>
+                        </div>
+                        <!--  -->
+                        <form method="post" class="login-display-login-boxs">
+                            <div class="login-display-login-rows">
+                                <label for="">Nome</label>
+                                <input type="text" name="register-name" value="<%= registerFail != '' ? registerFail[0] : '' %>">
+                            </div>
+                            <div class="login-display-login-rows">
+                                <label for="">CPF</label>
+                                <input type="text" id="mask-cpf" name="register-cpf" value="<%= registerFail != '' ? registerFail[1] : '' %>">
+                            </div>
+                            <div class="login-display-login-rows">
+                                <label for="">Telefone Celular</label>
+                                <input type="text" id="mask-tell" name="register-tell" value="<%= registerFail != '' ? registerFail[2] : '' %>">
+                            </div>
+                            <div class="login-display-login-rows">
+                                <label for="">E-mail</label>
+                                <input type="email" name="register-email" value="<%= registerFail != '' ? registerFail[3] : '' %>">
+                            </div>
+                            <div class="login-display-login-rows">
+                                <label for="">Senha</label>
+                                <input type="password" name="register-pass-one">
+                            </div>
+                            <div class="login-display-login-rows">
+                                <label for="">Senha novamente</label>
+                                <input type="password" name="register-pass-two">
+                            </div>
+                            <div class="login-display-login-rows-action">
+                                <button type="submit" id="button-register" formaction="/login/register">Registrar-se</button>
+                                <button type="button" id="open-screen-login"><b>Logar</b></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+    <section class="login-recovery-pass" id="login-recovery-pass">
+        <form method="post" class="login-recovery-box">
+            <div class="login-recovery-header">
+                <span>Recupere seu acesso</span>
+                <span style="cursor: pointer;" id="close-window-recovey">X</span>
+            </div>
+            
+            <input type="text" name="email-recovery" placeholder="Insira o e-mail cadastrado">
+            <button type="submit" formaction="/login/recovery">Recuperar</button>
+        </form>
+    </section>
+
+    <section class="system-section-notification" id="system-section-notification">
+        <div class="sys-notifi-container-main" id="sys-notifi-container-main">
+    
+            <!-- itens inseridos dinamicamente -->
+    
+        </div>
+    </section>
+    
+</body>
+<script src="/js/jquery.mask.js"></script>
+<script src="/js/js.cookie.min.js"></script>
+<script src="/js/popups.js"></script>
+<script>
+    $("#open-screen-login").click(function(){
+        $("#screen-display-register").fadeOut()
+        
+        setTimeout(() => {
+            $("#screen-display-login").fadeIn().css({'display':'flex'})
+        }, 500);
+
+    })
+
+    $("#open-screen-register").click(function(){
+        $("#screen-display-login").fadeOut()
+        
+        setTimeout(() => {
+            $("#screen-display-register").fadeIn().css({'display':'flex'})
+        }, 500);
+
+    })
+
+    $('#mask-cpf').mask('000.000.000-00');
+    $('#mask-tell').mask('(00)00000-0000');
+
+    let validate = '<%= registerFail %>'
+    if(validate != ''){
+        $("#screen-display-login").fadeOut()
+        
+        setTimeout(() => {
+            $("#screen-display-register").fadeIn().css({'display':'flex'})
+        }, 500);
+    }
+
+
+    /* RECOVERY */
+    $("#close-window-recovey").click(function(){
+        $("#login-recovery-pass").fadeOut()
+    })
+    $("#open-window-recovey").click(function(){
+        $("#login-recovery-pass").fadeIn().css({'display':'flex'})
+    })
+
+
+    //Campos personalizados
+    let activeNumber = false;
+    //Validação na digitação do inpt
+    $("#input-cpf-insert").keypress(function(key){
+
+        let keysCode = [49,50,51,52,53,54,55,56,57,48];
+
+        if(keysCode.indexOf(key.which) == -1){
+            //Letras
+
+            if(activeNumber == true){
+                activeNumber = false
+                $('#input-cpf-insert').unmask().val('')
+            }
+        }else{
+            //Numero
+
+            if(activeNumber == false){
+                activeNumber = true
+                $('#input-cpf-insert').mask('000.000.000-00')
+            }
+            //alert('numero')
+        }
+
+    })
+
+</script>
+</html>

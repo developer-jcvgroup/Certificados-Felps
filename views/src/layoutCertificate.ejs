@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/js/jquery-3.5.1.min.js"></script>
+
+    <title>Certificado</title>
+</head>
+<style>
+
+    @font-face {
+    font-family: myFirstFont;
+        src: url('/certificates/fonts/GraphikRegular_0.otf') format("opentype");
+    }
+
+</style>
+<body>
+    
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data-2012-2022.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="/js/FontsJs.js"></script>
+<script>
+
+    let month = {
+        '01': 'Janeiro',
+        '02': 'Fevereiro',
+        '03': 'Março',
+        '04': 'Abril',
+        '05': 'Maio',
+        '06': 'Junho',
+        '07': 'Julho',
+        '08': 'Agosto',
+        '09': 'Setembro',
+        '10': 'Outubro',
+        '11': 'Novembro',
+        '12': 'Dezembro'
+    }
+
+    var date = new Date();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); 
+    var yyyy = date.getFullYear();
+    date = mm + '/' + dd + '/' + yyyy;
+    //var player = GetPlayer();
+    //var name = player.GetVar("uName"); /* Replace uName with the Storyline variable holding the user's name */
+    var doc = new jsPDF({
+    orientation: 'landscape' /* Remove this line of code if your certificate is in portrait orientation */
+    })
+
+    if('<%= certificateInfo[0].jcv_course_brand %>' == 'Felps Professional'){
+
+        try {
+            // Fontes customizadas
+            doc.addFileToVFS("FelpsProfessional.ttf", fontFelpsProfessional);
+            doc.addFileToVFS("FelpsProfessionalSemiBold.ttf", FelpsProfessionalSemiBold);
+            doc.addFileToVFS("FelpsMen.ttf", fontFelpsMen);
+
+            // Adicionando as fontes
+            doc.addFont("FelpsProfessional.ttf", "FelpsProfessional", "Normal");
+            doc.addFont("FelpsProfessionalSemiBold.ttf", "FelpsProfessionalSemiBold", "Bold");
+            doc.addFont("FelpsMen.ttf", "FelpsMen", "Normal");
+
+            var img = new Image;
+            img.onload = function() {
+            doc.addImage(this, 0, 0, 297, 210);
+            
+            doc.setTextColor(29, 28, 29); /* Change the RGB text color by changing the numbers between the parentheses */
+            
+            //doc.setFont('GraphikRegular_0', 'bold');
+            doc.setFont("FelpsProfessionalSemiBold","Bold");
+            doc.setFontSize(32); /* Set the font size by changing the number between the parentheses */
+            doc.text('<%= dataUserInfo[0].jcv_users_name %>', (doc.internal.pageSize.width / 2 +15), 90, null, null, 'center'); /* This tells the PDF to add text to the page. The first argument is the text to add (in this case a JavaScript variable), the second is the x-coordinate (in this case we’re using a function to find a middle point for the document), the third is the y-coordinate (in millimeters), the fourth and fifth arguments are null, and the sixth argument says that the text should be centered */
+
+            /* ***** */
+            let textInsert = '<%= certificateInfo[0].jcv_course_text %>';
+
+            let dateCourseConfig = '<%= certificateInfo[0].jcv_course_initial_date.split("T")[0].split("-")[2] %> de '+month['<%= certificateInfo[0].jcv_course_initial_date.split("T")[0].split("-")[1] %>']+' de <%= certificateInfo[0].jcv_course_initial_date.split("T")[0].split("-")[0] %>'
+
+            //Iserindo as informações
+            textInsert = textInsert.replace('${courseName}','<%= certificateInfo[0].jcv_course_name %>')
+            textInsert = textInsert.replace('${managerCourse}','<%= getAllInstructors %>')
+            textInsert = textInsert.replace('${brandName}','<%= certificateInfo[0].jcv_course_brand %>')
+            textInsert = textInsert.replace('${dateCourse}', dateCourseConfig)
+            textInsert = textInsert.replace('${hoursCourse}','<%= certificateInfo[0].jcv_course_total_hours %>')
+
+            //console.log(textInsert)
+
+            let getArr = doc.splitTextToSize(textInsert, 100);
+            var width = doc.getTextWidth(getArr);
+            //console.log(width);
+            /* ***** */
+            doc.setFont("FelpsProfessional","Normal");
+            doc.setFontSize(19);
+            doc.text(getArr, ((doc.internal.pageSize.width / 2) + 15), 110, {maxWidth: 160, align: "center"}); /* See above for the full explanation of the doc.text() function */
+            /* ***** */
+
+            /* ASSINATURA */
+            let imageAss = '<%= certificateInfo[0].jcv_course_signature %>';
+            doc.addImage(imageAss, 'jpeg', (doc.internal.pageSize.width - 105), (doc.internal.pageSize.height - 59), 60, 20)// width, heigth, imgWidth, imgGeigth
+
+            doc.save("Certificado.pdf"); /* Swap out ‘Certificate’ with what you want your certificate to be named */
+            };
+            img.crossOrigin = "";
+            img.src = "/certificates/base-felps.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
+        } catch (error) {
+            alert('Houve um erro ao baixar seu certificado. Entre em contato com o admistrador')
+        }
+
+        
+    }else{
+        try {
+            // Fontes customizadas
+            doc.addFileToVFS("FelpsProfessional.ttf", fontFelpsProfessional);
+            doc.addFileToVFS("FelpsProfessionalSemiBold.ttf", FelpsProfessionalSemiBold);
+            doc.addFileToVFS("FelpsMen.ttf", fontFelpsMen);
+
+            // Adicionando as fontes
+            doc.addFont("FelpsProfessional.ttf", "FelpsProfessional", "Normal");
+            doc.addFont("FelpsProfessionalSemiBold.ttf", "FelpsProfessionalSemiBold", "Bold");
+            doc.addFont("FelpsMen.ttf", "FelpsMen", "Normal");
+
+            var img = new Image;
+            img.onload = function() {
+            doc.addImage(this, 0, 0, 297, 210);
+            
+            doc.setTextColor(29, 28, 29); /* Change the RGB text color by changing the numbers between the parentheses */
+            
+            //doc.setFont('GraphikRegular_0', 'bold');
+            doc.setFont("FelpsMen","Normal");
+            doc.setFontSize(34); /* Set the font size by changing the number between the parentheses */
+            doc.text('<%= dataUserInfo[0].jcv_users_name %>', (doc.internal.pageSize.width / 2 ), 80, null, null, 'center'); /* This tells the PDF to add text to the page. The first argument is the text to add (in this case a JavaScript variable), the second is the x-coordinate (in this case we’re using a function to find a middle point for the document), the third is the y-coordinate (in millimeters), the fourth and fifth arguments are null, and the sixth argument says that the text should be centered */
+
+            /* ***** */
+            let textInsert = '<%= certificateInfo[0].jcv_course_text %>';
+
+            let dateCourseConfig = '<%= certificateInfo[0].jcv_course_initial_date.split("T")[0].split("-")[2] %> de '+month['<%= certificateInfo[0].jcv_course_initial_date.split("T")[0].split("-")[1] %>']+' de <%= certificateInfo[0].jcv_course_initial_date.split("T")[0].split("-")[0] %>'
+
+            //Iserindo as informações
+            textInsert = textInsert.replace('${courseName}','<%= certificateInfo[0].jcv_course_name %>')
+            textInsert = textInsert.replace('${managerCourse}','<%= getAllInstructors %>')
+            textInsert = textInsert.replace('${brandName}','<%= certificateInfo[0].jcv_course_brand %>')
+            textInsert = textInsert.replace('${dateCourse}', dateCourseConfig)
+            textInsert = textInsert.replace('${hoursCourse}','<%= certificateInfo[0].jcv_course_total_hours %>')
+
+            //console.log(textInsert)
+
+            let getArr = doc.splitTextToSize(textInsert, 100);
+            var width = doc.getTextWidth(getArr);
+            //console.log(width);
+            /* ***** */
+            doc.setFont("FelpsMen","Normal");
+            doc.setFontSize(19);
+            doc.text(getArr, ((doc.internal.pageSize.width / 2) ), 100, {maxWidth: 160, align: "center"}); /* See above for the full explanation of the doc.text() function */
+            /* ***** */
+
+            /* ASSINATURA */
+            let imageAss = '<%= certificateInfo[0].jcv_course_signature %>';
+            doc.addImage(imageAss, 'jpeg', (doc.internal.pageSize.width / 2 - 15), (doc.internal.pageSize.height - 76), 70, 30)// width, heigth, imgWidth, imgGeigth
+            doc.save("Certificado.pdf"); /* Swap out ‘Certificate’ with what you want your certificate to be named */
+            };
+            img.crossOrigin = "";
+            img.src = "/certificates/base-felps-men.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
+        } catch (error) {
+            alert('Houve um erro ao baixar seu certificado. Entre em contato com o admistrador')
+        }
+    }
+</script>
+<!-- <script>
+    var date = new Date();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); 
+    var yyyy = date.getFullYear();
+    date = mm + '/' + dd + '/' + yyyy;
+    //var player = GetPlayer();
+    //var name = player.GetVar("uName"); /* Replace uName with the Storyline variable holding the user's name */
+    var doc = new jsPDF({
+    orientation: 'landscape' /* Remove this line of code if your certificate is in portrait orientation */
+    })
+
+    // Fontes customizadas
+    doc.addFileToVFS("FelpsProfessional.ttf", fontFelpsProfessional);
+    doc.addFileToVFS("FelpsProfessionalSemiBold.ttf", FelpsProfessionalSemiBold);
+    doc.addFileToVFS("FelpsMen.ttf", fontFelpsMen);
+
+    // Adicionando as fontes
+    doc.addFont("FelpsMen.ttf", "FelpsMen", "Normal");
+
+    var img = new Image;
+    img.onload = function() {
+    doc.addImage(this, 0, 0, 297, 210);
+    
+    doc.setTextColor(29, 28, 29); /* Change the RGB text color by changing the numbers between the parentheses */
+    
+    //doc.setFont('GraphikRegular_0', 'bold');
+    doc.setFont("FelpsMen","Normal");
+    doc.setFontSize(32); /* Set the font size by changing the number between the parentheses */
+    doc.text('Vitor Henrique Alves de Macena', (doc.internal.pageSize.width / 2), 90, null, null, 'center'); /* This tells the PDF to add text to the page. The first argument is the text to add (in this case a JavaScript variable), the second is the x-coordinate (in this case we’re using a function to find a middle point for the document), the third is the y-coordinate (in millimeters), the fourth and fifth arguments are null, and the sixth argument says that the text should be centered */
+
+    /* ***** */
+    let textInsert = 'Concluiu com sucesso o treinamento do curso “${courseName}”, ministrado por ${managerCourse} ${brandName}, realizado no dia ${dayCourse}, com carga horária de ${hoursCourse}.'
+    let getArr = doc.splitTextToSize(textInsert, 100);
+    var width = doc.getTextWidth(getArr);
+    //console.log(width);
+    /* ***** */
+    doc.setFont("FelpsMen","Normal");
+    doc.setFontSize(19);
+    doc.text(getArr, ((doc.internal.pageSize.width / 2) - 5), 110, {maxWidth: 160, align: "center"}); /* See above for the full explanation of the doc.text() function */
+    /* ***** */
+
+    /* Assinatura */
+    var img = new Image()
+    img.src = 'data:image/png;base64,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'
+    doc.addImage(img, 'png', 10, 150, 50, 15)
+
+
+    doc.save("Certificate.pdf"); /* Swap out ‘Certificate’ with what you want your certificate to be named */
+    };
+    img.crossOrigin = "";
+    img.src = "/certificates/base-felps-men.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
+</script> -->
+</html>
