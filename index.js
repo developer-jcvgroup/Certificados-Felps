@@ -14,8 +14,6 @@ app.use(express.urlencoded({extended: false, parameterLimit: 1000000, limit: '50
 app.use(express.json({limit: '50mb'})); //Aceitar json
 app.use(cookieParser())
 
-
-
 const middleware = require('./panel/middleware')
 
 const controllerLogin = require("./login/controllers/controllerLogin")
