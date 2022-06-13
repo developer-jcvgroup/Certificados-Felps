@@ -99,7 +99,7 @@ exports.recoveryPass = async (req,res) => {
             const textTwo = `Sua senha foi redefinida!. Senha provisória: <b>${randomstring}</b>. <b>Não se esqueça de mudar a senha após o login</b>!!`;
             emailSystemExe.sendMailExe(data[0].jcv_users_email_primary, 'Pedido de redefinição de senha', 'Redefinição de senha', 'Sistema JCV GROUP', data[0].jcv_users_name, textOne, textTwo);
 
-            console.log('Email enviado!')
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Email de confirmação enviado, acesse e valide sua conta.");
             res.redirect('/')
         }else{
             //Este email não esta na plataforma de certificado
@@ -113,12 +113,12 @@ exports.recoveryPass = async (req,res) => {
 
                 if(dataPanel != ''){
                     //Usuario é da plataforma do jcv GROUP
-                    console.log('Redefina sua senha no portal jcv group!')
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Redefina sua senha no portal do JCV GROUP!");
                     res.redirect('/')
                 }else{
                     //Usuario não é da plataforma
 
-                    console.log('Usuario inexistente!')
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuario inexistente!");
                     res.redirect('/')
 
                     //Chegando aqui significa que o email inserido não existe

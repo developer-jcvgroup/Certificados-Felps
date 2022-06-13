@@ -25,7 +25,7 @@ exports.moduleRegister = async (req,res) => {
     if(validateRegister != ''){
         //Usuario ja registradp
         req.flash('registerFailedData', [registerName, registerCPF, registerTell, registerEmail])
-        console.log('usuario ja registrado! Verifique o email e CPF inseridos')
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuário ja registrado! Verifique o e-mail e CPF inseridos");
         res.redirect('/') 
     }else{
         //Usuario ainda não registrado
@@ -40,7 +40,7 @@ exports.moduleRegister = async (req,res) => {
         if(validateRegisterPortal != ''){
             //Usuario cadastrado no portal JCV
             req.flash('registerFailedData', [registerName, registerCPF, registerTell, registerEmail])
-            console.log('Dados inseridos vinculados a uma conta no jcv.net.br, acesse sua conta e vincule seu perfil!')
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Dados inseridos vinculados a uma conta no <b>jcv.net.br</b>, acesse sua conta e vincule seu perfil!");
             res.redirect('/') 
         }else{
             //Usuario não cadastrado no portal
@@ -64,10 +64,10 @@ exports.moduleRegister = async (req,res) => {
                 .table("jcv_users")
                 .then(data => {
                     if(data[0] == 1){
-                        console.log('Conta registrada com sucesso!')
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Conta registrada com sucesso!!");
                         res.redirect('/') 
                     }else{
-                        console.log('Erro ao criar sua conta!')
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao criar sua conta");
                         res.redirect('/') 
                     }
                 })
