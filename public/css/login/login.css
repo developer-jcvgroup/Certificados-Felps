@@ -76,13 +76,13 @@ body, html{
     justify-content: center;
 }
 .login-container-display-box-main{
-    width: fit-content;
+    width: 400px;
     height: fit-content;
     display: flex;
     flex-direction: column;
 }
 .login-container-login-register{
-    width: 400px;
+    /* width: 400px; */
     margin-top: -30%;
     height: fit-content;
     display: flex;
@@ -252,4 +252,11 @@ body, html{
     background: var(--color-one-btn);
     cursor: pointer;
     transition: 0.5s;
+}
+
+/* RESPONSIVE */
+@media only screen and (max-width: 600px) {
+    .login-section-display-two{
+        width: 95%;
+    } 
 }
