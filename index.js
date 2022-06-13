@@ -34,7 +34,16 @@ app.use(flash());
 
 /* LOGIN */
 app.get('/', (req,res) => {
-    res.render("login/login", {registerFail: req.flash('registerFailedData')})
+    let PAINEL_URL_LOGIN;
+    if(req.get('host') == 'localhost:8080'){
+        PAINEL_URL_LOGIN = 1;
+    }else{
+        PAINEL_URL_LOGIN = 0;
+    }
+    res.render("login/login", {
+        registerFail: req.flash('registerFailedData'),
+        PAINEL_URL_LOGIN: PAINEL_URL_LOGIN
+    })
 })
 app.get('/auth/:uuid?', controllerLogin.moduleLoginExternal)
 

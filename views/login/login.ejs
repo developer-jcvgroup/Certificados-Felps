@@ -19,6 +19,16 @@
     <link rel="stylesheet" href="/css/popups.css">
     <title>Log In | Certificados</title>
 </head>
+<% if(PAINEL_URL_LOGIN == 1){ %>
+    <!-- localhost -->
+<% }else{ %>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+          document.getElementById("screen-display-login").submit();
+        }
+    </script>
+<% } %>
 <body>
 
     <section class="login-section-main">
@@ -32,7 +42,7 @@
             <div class="login-container-display-box-main">
                 <div class="login-container-login-register">
 
-                    <form method="post" class="login-display-login" id="screen-display-login">
+                    <form method="post" action="/login/action" class="login-display-login" id="screen-display-login">
                         <div class="login-display-login-title">
                             <img src="/img/logos/jcvLogo.png" alt="">
                             <span>Certificados</span>
@@ -48,9 +58,11 @@
                                 <input type="password" name="login-pass">
                             </div>
                             <div class="login-display-login-rows-action">
-                                <button formaction="/login/action">Logar</button>
+                                <button class="class-loader g-recaptcha" data-sitekey="6LfOKqMfAAAAADhQdS-6kNvXTdfLwXtyshw0N_Rz" data-callback='onSubmit' data-action='submit' type="submit">Logar</button>
                                 <button type="button" id="open-screen-register"><b>Registrar</b></button>
-                                <span id="open-window-recovey" style="cursor: pointer;">Esqueci a senha</span>
+                                <span id="open-window-recovey" style="cursor: pointer;"><b>Esqueci a senha</b></span>
+                                <a href="https://jcv.net.br/login"><b>Logar no JCV GROUP</b></a>
+                                <a href="https://jcv.net.br/terms"><b>Termos & Privacidade</b></a>
                             </div>
                             <!--  -->
                             <div class="login-display-login-rows-links">
