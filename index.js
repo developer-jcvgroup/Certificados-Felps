@@ -44,13 +44,6 @@ app.post("/login/recovery", controllerLogin.recoveryPass)
 
 app.get("/certificate/:uuid?/:idUser?", controllerCertificates.moduleExportsCertificate)
 
-
-
-
-
-
-
-
 const certificatePanel = require("./panel/app");
 app.use("/painel", certificatePanel);
 
