@@ -25,7 +25,8 @@ exports.moduleRegister = async (req,res) => {
     if(validateRegister != ''){
         //Usuario ja registradp
         req.flash('registerFailedData', [registerName, registerCPF, registerTell, registerEmail])
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuário ja registrado! Verifique o e-mail e CPF inseridos");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuário ja registrado! Verifique o e-mail e CPF inseridos");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Usuário ja registrado! Verifique o e-mail e CPF inseridos","timeMsg": 3000}`);
         res.redirect('/') 
     }else{
         //Usuario ainda não registrado
@@ -40,7 +41,8 @@ exports.moduleRegister = async (req,res) => {
         if(validateRegisterPortal != ''){
             //Usuario cadastrado no portal JCV
             req.flash('registerFailedData', [registerName, registerCPF, registerTell, registerEmail])
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Dados inseridos vinculados a uma conta no <b>jcv.net.br</b>, acesse sua conta e vincule seu perfil!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Dados inseridos vinculados a uma conta no <b>jcv.net.br</b>, acesse sua conta e vincule seu perfil!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Dados inseridos vinculados a uma conta no <b>jcv.net.br</b>, acesse sua conta e vincule seu perfil!","timeMsg": 3000}`);
             res.redirect('/') 
         }else{
             //Usuario não cadastrado no portal
@@ -63,16 +65,19 @@ exports.moduleRegister = async (req,res) => {
                 })
                 .table("jcv_users")
                 .then(data => {
-                    if(data[0] == 1){
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Conta registrada com sucesso!!");
+                    if(data > 1){
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Conta registrada com sucesso!!");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Conta registrada com sucesso!!","timeMsg": 3000}`);
                         res.redirect('/') 
                     }else{
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao criar sua conta");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao criar sua conta");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao criar sua conta","timeMsg": 3000}`);
                         res.redirect('/') 
                     }
                 })
             }else{
-                console.log('As senhas não correspondem!')
+                //console.log('As senhas não correspondem!')
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"As senhas não correspondem!","timeMsg": 3000}`);
                 req.flash('registerFailedData', [registerName, registerCPF, registerTell, registerEmail])
                 res.redirect('/')
             }            

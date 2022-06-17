@@ -124,8 +124,32 @@
             </form>
         </section>
     </section>
+    <!--  -->
+    <section id="notifications-main">
+        <!-- Notifications -->
+    </section>
 </body>
+<script src="https://jcv.net.br/js/global/notifications.js"></script>
+<script src="/js/jquery.mask.js"></script>
+<script src="/js/js.cookie.min.js"></script>
 <script>
+    //Sistema de notificações
+    if(Cookies.get("SYSTEM-NOTIFICATIONS-MODULE") != undefined){
+        let getCookieMsg = JSON.parse(Cookies.get("SYSTEM-NOTIFICATIONS-MODULE"));
+        
+        //Exibindo a msg
+        $.notification(
+            [getCookieMsg.message],
+            {
+                messageType: getCookieMsg.typeMsg,
+                timeView: getCookieMsg.timeMsg,
+            }
+        )
+
+        console.log(getCookieMsg)
+
+        Cookies.remove("SYSTEM-NOTIFICATIONS-MODULE")
+    }
 
     let indexOpen = 0;
     function animateIcon (){

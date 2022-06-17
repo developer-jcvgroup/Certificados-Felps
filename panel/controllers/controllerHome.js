@@ -62,7 +62,8 @@ exports.saveProfile = async (req,res) => {
         .then( data => {
             if( data >= 1){
                 //Update ok
-                console.log('senha atualizada com sucesso')    
+                //console.log('senha atualizada com sucesso')
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "sucess","message":"Senha atualizada com sucesso","timeMsg": 3000}`);   
             }else{
                 //Erro ao atualizar
                 console.log('erro ao atualizar a senha')
@@ -85,12 +86,14 @@ exports.saveProfile = async (req,res) => {
     .then( data => {
         if( data >= 1){
             //Update ok
-            console.log('conta atualizada com sucesso')
+            //console.log('conta atualizada com sucesso')
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Conta atualizada com sucesso","timeMsg": 3000}`);
             res.redirect('/painel')
 
         }else{
             //Erro ao atualizar
-            console.log('erro ao atualizar seus dados')
+            //console.log('erro ao atualizar seus dados')
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao atualizar seus dados","timeMsg": 3000}`);
             res.redirect('/painel')
         }
     })

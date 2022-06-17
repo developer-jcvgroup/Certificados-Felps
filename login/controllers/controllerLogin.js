@@ -25,7 +25,8 @@ exports.moduleLogin = async (req,res) => {
 
     if(validadeOne == true){
         //O usuario possui conta no painel JCV GROUP
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você possui conta no portal JCV GROUP! Acesse por la");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você possui conta no portal JCV GROUP! Acesse por la");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você possui conta no portal JCV GROUP! Acesse por la","timeMsg": 3000}`);
         res.redirect('/') 
     }else{
         //O Usuario não possui conta no JCV GROUP
@@ -50,7 +51,8 @@ exports.moduleLogin = async (req,res) => {
                     console.log('logado com sucesso!')
                     res.redirect('/painel')
                 }else{
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuario ou senha incorretos!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuario ou senha incorretos!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Usuario ou senha incorretos!","timeMsg": 3000}`);
                     res.redirect('/') 
                 }
 
@@ -58,7 +60,8 @@ exports.moduleLogin = async (req,res) => {
                 //Erro ao autenticar
 
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Senha incorreta");
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você possui conta no portal JCV GROUP! Acesse por la");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você possui conta no portal JCV GROUP! Acesse por la");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Senha incorreta!","timeMsg": 3000}`);
                 res.redirect('/')
             }
         })
@@ -99,7 +102,8 @@ exports.recoveryPass = async (req,res) => {
             const textTwo = `Sua senha foi redefinida!. Senha provisória: <b>${randomstring}</b>. <b>Não se esqueça de mudar a senha após o login</b>!!`;
             emailSystemExe.sendMailExe(data[0].jcv_users_email_primary, 'Pedido de redefinição de senha', 'Redefinição de senha', 'Sistema JCV GROUP', data[0].jcv_users_name, textOne, textTwo);
 
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Email de confirmação enviado, acesse e valide sua conta.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Email de confirmação enviado, acesse e valide sua conta.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Email de confirmação enviado, acesse e valide sua conta","timeMsg": 3000}`);
             res.redirect('/')
         }else{
             //Este email não esta na plataforma de certificado
@@ -113,12 +117,14 @@ exports.recoveryPass = async (req,res) => {
 
                 if(dataPanel != ''){
                     //Usuario é da plataforma do jcv GROUP
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Redefina sua senha no portal do JCV GROUP!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Redefina sua senha no portal do JCV GROUP!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Redefina sua senha no portal do JCV GROUP!","timeMsg": 3000}`);
                     res.redirect('/')
                 }else{
                     //Usuario não é da plataforma
 
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuario inexistente!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Usuario inexistente!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Usuario inexistente!","timeMsg": 3000}`);
                     res.redirect('/')
 
                     //Chegando aqui significa que o email inserido não existe

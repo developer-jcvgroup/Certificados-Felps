@@ -35,7 +35,7 @@ app.use(flash());
 /* LOGIN */
 app.get('/', (req,res) => {
     let PAINEL_URL_LOGIN;
-    if(req.get('host') == 'localhost:8080'){
+    if(req.get('host') == 'localhost:5050'){
         PAINEL_URL_LOGIN = 1;
     }else{
         PAINEL_URL_LOGIN = 0;
