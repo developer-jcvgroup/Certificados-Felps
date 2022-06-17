@@ -160,8 +160,8 @@
             /* ***** */
 
             /* ASSINATURA */
-            let imageAss = '<%= certificateInfo[0].jcv_course_signature %>';
-            doc.addImage(imageAss, 'jpeg', (doc.internal.pageSize.width / 2 - 15), (doc.internal.pageSize.height - 76), 70, 30)// width, heigth, imgWidth, imgGeigth
+            //let imageAss = '<%= certificateInfo[0].jcv_course_signature %>';
+            //doc.addImage(imageAss, 'jpeg', (doc.internal.pageSize.width / 2 - 15), (doc.internal.pageSize.height - 76), 70, 30)// width, heigth, imgWidth, imgGeigth
             doc.save("Certificado.pdf"); /* Swap out ‘Certificate’ with what you want your certificate to be named */
             };
             img.crossOrigin = "";
