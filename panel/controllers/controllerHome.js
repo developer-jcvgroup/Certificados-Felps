@@ -43,59 +43,72 @@ exports.saveProfile = async (req,res) => {
     userCPF = await userCPF.split('-').join('')
 
     const userTelefone = req.body['user-telefone'];
-    const userEmailPrimary = req.body['user-email-primary'];
-    const userEmailSecundary = req.body['user-email-secundary'];
+    const userEmailPrimary = req.body['user-email-primary'] == '' ? null: req.body['user-email-primary'];
+    const userEmailSecundary = req.body['user-email-secundary'] == '' ? null : req.body['user-email-secundary']
 
-    if(req.body['login-newpass-one'] != '' && req.body['login-newpass-one'] == req.body['login-newpass-two']){
-        //Ele esta solicitando a troca de senha
+    //Validando se o email inserido existe no portal JCV
+    const validadeEmail = await databasePanel
+    .select()
+    .whereRaw(`jcv_userEmailCorporate in ('${userEmailPrimary}','${userEmailSecundary}')`)
+    .table("jcv_users")
+    .then( data => {return data})
+    //console.log(validadeEmail)
 
-        let salt = bcripty.genSaltSync(10);
-        let passwordHash = bcripty.hashSync(req.body['login-newpass-one'], salt)
-
-        //Atualiando a senha tambem
+    if(validadeEmail == ''){
+        if(req.body['login-newpass-one'] != '' && req.body['login-newpass-one'] == req.body['login-newpass-two']){
+            //Ele esta solicitando a troca de senha
+    
+            let salt = bcripty.genSaltSync(10);
+            let passwordHash = bcripty.hashSync(req.body['login-newpass-one'], salt)
+    
+            //Atualiando a senha tambem
+            database
+            .update({
+                jcv_users_pass: passwordHash
+            })
+            .where({jcv_user_id: DASH_INFO[0]})
+            .table("jcv_users")
+            .then( data => {
+                if( data >= 1){
+                    //Update ok
+                    //console.log('senha atualizada com sucesso')
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "sucess","message":"Senha atualizada com sucesso","timeMsg": 3000}`);   
+                }else{
+                    //Erro ao atualizar
+                    console.log('erro ao atualizar a senha')
+                }
+            })
+    
+        }
+    
+        //Inserindo no banco de dados
         database
         .update({
-            jcv_users_pass: passwordHash
+            jcv_users_name: userName,
+            jcv_users_cpf: userCPF,
+            jcv_users_telefone: userTelefone,
+            jcv_users_email_primary: userEmailPrimary,
+            jcv_users_email_secundary: userEmailSecundary
         })
         .where({jcv_user_id: DASH_INFO[0]})
         .table("jcv_users")
         .then( data => {
             if( data >= 1){
                 //Update ok
-                //console.log('senha atualizada com sucesso')
-                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "sucess","message":"Senha atualizada com sucesso","timeMsg": 3000}`);   
+                //console.log('conta atualizada com sucesso')
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Conta atualizada com sucesso","timeMsg": 3000}`);
+                res.redirect('/painel')
+    
             }else{
                 //Erro ao atualizar
-                console.log('erro ao atualizar a senha')
+                //console.log('erro ao atualizar seus dados')
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao atualizar seus dados","timeMsg": 3000}`);
+                res.redirect('/painel')
             }
         })
-
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Este e-mail ja está em uso","timeMsg": 3000}`);
+        res.redirect('/painel')
     }
-
-    //Inserindo no banco de dados
-    database
-    .update({
-        jcv_users_name: userName,
-        jcv_users_cpf: userCPF,
-        jcv_users_telefone: userTelefone,
-        jcv_users_email_primary: userEmailPrimary,
-        jcv_users_email_secundary: userEmailSecundary
-    })
-    .where({jcv_user_id: DASH_INFO[0]})
-    .table("jcv_users")
-    .then( data => {
-        if( data >= 1){
-            //Update ok
-            //console.log('conta atualizada com sucesso')
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Conta atualizada com sucesso","timeMsg": 3000}`);
-            res.redirect('/painel')
-
-        }else{
-            //Erro ao atualizar
-            //console.log('erro ao atualizar seus dados')
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao atualizar seus dados","timeMsg": 3000}`);
-            res.redirect('/painel')
-        }
-    })
 
 }
