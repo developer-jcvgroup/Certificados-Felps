@@ -254,9 +254,19 @@ body, html{
     transition: 0.5s;
 }
 
+#mobile{
+    display: none;
+}
 /* RESPONSIVE */
 @media only screen and (max-width: 600px) {
     .login-section-display-two{
         width: 95%;
     } 
+
+    #desktop{
+        display: none;
+    }
+    #mobile{
+        display: flex;
+    }
 }

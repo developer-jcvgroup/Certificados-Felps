@@ -247,7 +247,7 @@ header{
 }
 .main-certificate-container-box-img img{
     width: 100%;
-    object-fit: none;
+    object-fit: cover;
 }
 .main-certificate-container-box-info{
     width: 100%;
