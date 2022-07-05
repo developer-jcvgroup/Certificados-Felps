@@ -161,11 +161,12 @@
             doc.addImage(imageAss, 'jpeg', (doc.internal.pageSize.width - 105), (doc.internal.pageSize.height - 59), 60, 20)// width, heigth, imgWidth, imgGeigth
 
             doc.save("Certificado.pdf"); /* Swap out ‘Certificate’ with what you want your certificate to be named */
-            };
+            countFinality = 1    
+        };
             img.crossOrigin = "";
             img.src = "/certificates/base-felps.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
 
-            countFinality = 1
+            
         } catch (error) {
             countFinality = 1
             console.log(error)
@@ -223,6 +224,7 @@
             //let imageAss = '<%= certificateInfo[0].jcv_course_signature %>';
             //doc.addImage(imageAss, 'jpeg', (doc.internal.pageSize.width / 2 - 15), (doc.internal.pageSize.height - 76), 70, 30)// width, heigth, imgWidth, imgGeigth
             doc.save("Certificado.pdf"); /* Swap out ‘Certificate’ with what you want your certificate to be named */
+            
             };
             img.crossOrigin = "";
             img.src = "/certificates/base-felps-men.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
