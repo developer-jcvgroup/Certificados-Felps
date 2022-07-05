@@ -99,7 +99,7 @@ exports.recoveryPass = async (req,res) => {
             //Passando senha provisória no email
             //Sistema de email
             const textOne = 'Você solicitou a <b>redefinição de sua senha</b>.';
-            const textTwo = `Sua senha foi redefinida!. Senha provisória: <b>${randomstring}</b>. <b>Não se esqueça de mudar a senha após o login</b>!!`;
+            const textTwo = `Sua senha foi redefinida! Senha provisória: <b>${randomstring}</b>. <b>Não se esqueça de mudar a senha após o login</b>!`;
             emailSystemExe.sendMailExe(data[0].jcv_users_email_primary, 'Pedido de redefinição de senha', 'Redefinição de senha', 'Sistema JCV GROUP', data[0].jcv_users_name, textOne, textTwo);
 
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Email de confirmação enviado, acesse e valide sua conta.");

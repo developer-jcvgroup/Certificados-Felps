@@ -155,7 +155,7 @@ body, html{
     margin: 2% 0;
 }
 .login-display-login-rows-action button{
-    width: fit-content;
+    width: 50%;
     outline: 0;
     border: 0;
     padding: 8px 18px;
@@ -168,14 +168,14 @@ body, html{
     margin: 10px 0;
 }
 .login-display-login-rows-action button:nth-child(2){
-    width: fit-content;
+    width: 50%;
     outline: 0;
     border: 0;
     padding: 8px 18px;
     border-radius: 4px;
-    border: 2px solid var(--color-one);
     font-size: 0.8rem;
-    color: var(--color-one);
+    color: var(--color-green);
+    border: 2px solid var(--color-green);
     background: transparent;
     cursor: pointer;
     margin: 10px 0;
@@ -184,12 +184,12 @@ body, html{
     text-decoration: underline;
     font-size: 0.8rem;
     color: var(--color-one);
-    margin: 15px 0;
+    margin: 15px 8px;
 }
 .login-display-login-rows-action a{
     font-size: 0.8rem;
     color: var(--color-one);
-    margin: 15px 0;
+    margin: 15px 8px;
 }
 
 

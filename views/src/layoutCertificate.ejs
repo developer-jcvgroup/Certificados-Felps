@@ -53,7 +53,9 @@
     orientation: 'landscape' /* Remove this line of code if your certificate is in portrait orientation */
     })
 
-    if('<%= certificateInfo[0].jcv_course_brand %>' == 'Felps Professional'){
+    async function generateCert(){
+        let countFinality = 0;
+        if('<%= certificateInfo[0].jcv_course_brand %>' == 'Felps Professional'){
 
         try {
             // Fontes customizadas
@@ -108,12 +110,19 @@
             };
             img.crossOrigin = "";
             img.src = "/certificates/base-felps.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
+            
+            $(window).load(function(){
+                countFinality = 1
+            });
+
         } catch (error) {
-            alert('Houve um erro ao baixar seu certificado. Entre em contato com o admistrador')
+            countFinality = 1
+            console.log(error)
+            //alert('Houve um erro ao baixar seu certificado. Entre em contato com o admistrador')
         }
 
-        
-    }else{
+
+        }else{
         try {
             // Fontes customizadas
             doc.addFileToVFS("FelpsProfessional.ttf", fontFelpsProfessional);
@@ -166,10 +175,25 @@
             };
             img.crossOrigin = "";
             img.src = "/certificates/base-felps-men.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
+        
+            $(window).load(function(){
+                countFinality = 1
+            });
         } catch (error) {
-            alert('Houve um erro ao baixar seu certificado. Entre em contato com o admistrador')
+            countFinality = 1
+            console.log(error)
+            //alert('Houve um erro ao baixar seu certificado. Entre em contato com o admistrador')
         }
+        }
+
+        setInterval(() => {
+            if(countFinality == 1){
+                window.close()
+            }
+        }, 100);
     }
+
+    generateCert()
 </script>
 <!-- <script>
     var date = new Date();
