@@ -165,8 +165,9 @@
             countFinality = 1    
         };
             img.crossOrigin = "";
-            img.src = "/certificates/base-felps.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
+            img.src = "<%= certificateInfo[0].jcv_models_certificates_directory %>"; /* Change the file name between these quotes to the file that you exported as the base certificate */
 
+            //alert('<%= certificateInfo[0].jcv_models_certificates_directory %>')
             
         } catch (error) {
             countFinality = 1
@@ -228,7 +229,7 @@
             countFinality = 1  
             };
             img.crossOrigin = "";
-            img.src = "/certificates/base-felps-men.png"; /* Change the file name between these quotes to the file that you exported as the base certificate */
+            img.src = "<%= certificateInfo[0].jcv_models_certificates_directory %>"; /* Change the file name between these quotes to the file that you exported as the base certificate */
         } catch (error) {
             countFinality = 1
             console.log(error)

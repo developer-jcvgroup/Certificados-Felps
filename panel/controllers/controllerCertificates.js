@@ -11,6 +11,7 @@ exports.moduleExportsCertificate = async (req,res) => {
     .select()
     .whereRaw(`JSON_CONTAINS(jcv_course_array_users, '${idUser}', '$') AND jcv_course_uuid = '${getUUID}'`)
     .table("jcv_course")
+    .join("jcv_models_certificates","jcv_models_certificates.jcv_models_certificates_id","jcv_course.jcv_course_certificate_model_id")
     .then( data => {
         if(data != ''){
 
